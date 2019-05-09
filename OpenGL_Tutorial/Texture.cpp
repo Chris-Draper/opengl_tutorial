@@ -7,7 +7,9 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "MyShader.h"
 
 #include <iostream>
@@ -206,8 +208,24 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
+		// transform the texture container
+		// create the identity matrix with diagonals of only 1's
+		glm::mat4 transform = glm::mat4(1.0f);
+		// translate the texture container right and down in the xy plane
+		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+		// rotation around the z-axis over time
+		// glm::radians() takes input as degress and converts to radians - glm::radians(90.0f) is roate 90 degrees
+		// must rotate around a unit vector so you always have to make sure to normalize first
+		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
+		// multiply matrix by scalar to shrink the image on x, y, and z axis (even though only 2D)
+		transform = glm::scale(transform, glm::vec3(0.5, 0.5, 0.5));
+
 		// tell GL to use the new shader program whenever render is called
 		textureShader.use();
+		// now that the shader is active we pass the transformation matrix to it
+		unsigned int transformLoc = glGetUniformLocation(textureShader.ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
 		// bind the vertex array again? Not sure why but see if that fixes the bug?
 		glBindVertexArray(VAO);
 		// render the triangle
