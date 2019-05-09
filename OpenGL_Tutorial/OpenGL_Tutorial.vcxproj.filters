@@ -27,12 +27,21 @@
     <ClCompile Include="fShader.fs">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Square.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TShader.h">
+    <ClInclude Include="MyShader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyShader.h">
+    <ClInclude Include="stb_image.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
