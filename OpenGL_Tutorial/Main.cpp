@@ -152,17 +152,32 @@ int main()
 		-0.5f, -0.5f, 0.0f,  // bottom left
 		-0.5f,  0.5f, 0.0f   // top left 
 	};
+	unsigned int indices[] = {  // note that we start from 0!
+		0, 1, 3,  // first Triangle
+		1, 2, 3   // second Triangle
+	};
+
 	// get id of the vertex buffer object
-	unsigned int VBO, VAO;
-	// generate the VAO and the VBO
+	unsigned int VBO, VAO, EBO;
+	// generate the VAO, VBO, and EBO
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	// note: this EBO is stored in the VAO
+	glGenBuffers(1, &EBO);
 	// bind the VAO first, then bind VBO, then set vertex attributes
 	glBindVertexArray(VAO);
+
 	// set the type of the buffer - aka array buffer
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	// fill the buffer with the vertices' data and say static draw is infrequent update
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// set the buffer type for EBO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	// fill buffer with the indices data = order that you go to each vertex
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
 	// set the vertex attribute pointers and enable them
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -190,18 +205,23 @@ int main()
 		// this is a state using function
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// DRAW THE TRIANGLE :D
 		// tell GL to use the new shader program whenever render is called
 		glUseProgram(shaderProgram);
 		// bind VAO every time you render to keep things organized
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// finally draw the triangle :D
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// swap out colors in the buffer based on updated user input
 		glfwSwapBuffers(window);
 		// check for any user input
 		glfwPollEvents();
 	}
+
+	// de-allocate all resources after done rendering
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 
 	// delete all of glfw's resources used to render after done rendering
 	glfwTerminate();
