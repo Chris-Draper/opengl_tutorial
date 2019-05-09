@@ -123,7 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="D:\3xplore\opengl_tutorials\glad\src\glad.c" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Shaders.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
