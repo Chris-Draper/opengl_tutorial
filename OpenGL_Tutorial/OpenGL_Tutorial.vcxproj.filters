@@ -18,8 +18,22 @@
     <ClCompile Include="D:\3xplore\opengl_tutorials\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shaders.cpp">
+    <ClCompile Include="Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vShader.vs">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fShader.fs">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TShader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyShader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
